@@ -13,8 +13,7 @@
     }
 }(this, function () {
 
-  var RColor = function( hue ) {
-    //this.hue      = hue,
+  var RColor = function( ) {
     this.goldenRatio   = 0.618033988749895;
     this.hexwidth    = 2;
   };
@@ -44,19 +43,20 @@
     return new Array(this.hexwidth - str.length + 1).join('0') + str;
   };
 
-  RColor.prototype.get = function(hue,saturation,value,rgb) {
-    this.hue = hue;
+  RColor.prototype.get = function(hue, range, saturation, value, asRgb) {
+    this.hue = hue * range;
     this.hue += this.goldenRatio;
     this.hue %= 1;
     if(typeof saturation !== "number")  saturation = 0.5;
     if(typeof value !== "number")    value = 0.95;
     var rgb = this.hsvToRgb(this.hue,saturation,value);
-    if(rgb)
+    if(asRgb){
       return rgb;
-    else
+    }else{
       return "#" +  this.padHex(rgb[0].toString(16))
         + this.padHex(rgb[1].toString(16))
         + this.padHex(rgb[2].toString(16));
+    }
 
   };
 
